@@ -1,28 +1,35 @@
+:root {
+  --primary-bg: #yourPrimaryColor; // Replace with your primary color
+  --secondary-bg: #yourSecondaryColor; // Replace with your secondary color
+  --good-color: #yourGoodColor; // Replace with your good color
+  --bad-color: #yourBadColor; // Replace with your bad color
+  --overlay-color: #yourOverlayColor; // Replace with your overlay color
+}
+
 @keyframes palantir-glowing {
-  40% {
-    background: none;
+  0%, 100% {
+    background: transparent;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
   }
-
   50% {
-    background: $m-secondary_bg--mix-30;
+    background: rgba(var(--secondary-bg), 0.3);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
   }
-
-  60% {
-    background: $m-primary_bg--mix-30;
-  }
-
   70% {
-    background: none;
+    background: rgba(var(--primary-bg), 0.3);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.9);
   }
 }
 
 .palantir {
   flex: 0 1 auto;
   animation: palantir-glowing 1.5s ease-in-out infinite;
+  transition: background 0.3s ease, color 0.3s ease;
 
   &-slot {
     animation: none;
     opacity: 0.6;
+    transition: opacity 0.3s ease;
 
     &:hover {
       opacity: 1;
@@ -34,21 +41,27 @@
   }
 
   &-on {
-    background: $c-good;
-    color: $c-over;
+    background: var(--good-color);
+    color: var(--overlay-color);
     animation: none;
+    transition: background 0.3s ease, color 0.3s ease;
 
     &:hover {
-      background: $c-bad !important;
-      color: $c-over !important;
+      background: var(--bad-color) !important;
+      color: var(--overlay-color) !important;
     }
   }
 
   &::after {
+    content: '';
+    position: absolute; // Ensure the pseudo-element is positioned correctly
     top: 1px;
-    @include inline-start(0);
-    @include inline-end(auto);
+    left: 0; // Use left instead of inline-start for better compatibility
+    right: 0; // Use right instead of inline-end for better compatibility
     background: none;
     box-shadow: none;
+    transition: all 0.3s ease; // Add transition for smoother effects
   }
 }
+
+  
